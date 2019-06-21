@@ -1,8 +1,6 @@
 official-keycloak:
   fullnameOverride: official-kc
   keycloak:
-    image:
-      tag: 4.6.0.Final
     extraInitContainers: |
       - name: theme-provider
         image: gcr.io/simple-step-project/keycloak-theme:0.1.0
