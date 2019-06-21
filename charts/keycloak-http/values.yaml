@@ -1,5 +1,5 @@
 official-keycloak:
-  fullnameOverride: official-kc
+  fullnameOverride: keycloak
   keycloak:
     extraInitContainers: |
       - name: theme-provider
@@ -48,7 +48,7 @@ official-keycloak:
       # dbPassword: keycloak
     service:
       annotations:
-        fabric8.io/ingress.name: "mykeycloak"
+        fabric8.io/ingress.name: "keycloak"
         fabric8.io/expose: "true"
 
 # https://github.com/helm/helm/issues/4490
