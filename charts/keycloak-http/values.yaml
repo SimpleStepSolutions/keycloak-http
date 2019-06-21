@@ -1,0 +1,66 @@
+official-keycloak:
+  fullnameOverride: official-kc
+  keycloak:
+    extraInitContainers: |
+      - name: theme-provider
+        image: gcr.io/simple-step-project/keycloak-theme:0.1.0
+        imagePullPolicy: Always
+        command:
+          - sh
+        args:
+          - -c
+          - |
+            echo "Copying theme..."
+            cp -R /mytheme/* /theme
+        volumeMounts:
+          - name: theme
+            mountPath: /theme
+
+    extraVolumeMounts: |
+      - name: theme
+        mountPath: /opt/jboss/keycloak/standalone/deployments
+
+    extraVolumes: |
+      - name: theme
+        emptyDir: {}
+    password: "admin"
+    persistence:
+      # Disable deployment of the PostgreSQL chart
+      deployPostgres: false
+
+      # The database vendor. Can be either "postgres", "mysql", "mariadb", or "h2"
+      # dbVendor: H2
+      dbVendor: postgres
+
+      ## The following values only apply if "deployPostgres" is set to "false"
+
+      # Optionally specify an existing secret
+      existingSecret: official-pg
+      existingSecretKey: postgres-password
+      # existingSecretKey: postgresql-password
+
+      dbName: keycloak
+      dbHost: official-pg
+      dbPort: 5432 # 5432 is PostgreSQL's default port. For MySQL it would be 3306
+      dbUser: keycloak
+
+      # Only used if no existing secret is specified. In this case a new secret is created
+      # dbPassword: keycloak
+    service:
+      annotations:
+        fabric8.io/ingress.name: "mykeycloak"
+        fabric8.io/expose: "true"
+
+# https://github.com/helm/helm/issues/4490
+keycloak:
+  persistence:
+    deployPostgres: false
+
+official-postgresql:
+  fullnameOverride: official-pg
+  # postgresqlUsername: keycloak
+  # postgresqlPassword: password
+  # postgresqlDatabase: keycloak
+  postgresUser: keycloak
+  postgresPassword: password
+  postgresDatabase: keycloak

@@ -1,0 +1,12 @@
+buildPack: helm
+pipelineConfig:
+  pipelines:
+    pullRequest:
+      promote:
+        steps:
+        - dir: charts/preview
+          steps:
+          - sh: make preview
+            name: make-preview
+          - sh: jx preview --app $APP_NAME --dir ../..
+            name: jx-preview
