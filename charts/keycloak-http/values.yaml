@@ -1,5 +1,5 @@
 official-keycloak:
-  fullnameOverride: official-kc
+  fullnameOverride: keycloak-http
   keycloak:
     extraInitContainers: |
       - name: theme-provider
