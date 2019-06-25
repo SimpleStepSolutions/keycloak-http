@@ -16,21 +16,6 @@ official-keycloak:
           - name: theme
             mountPath: /theme
 
-    {{- if .Values.global.cloudsql.enabled }}
-    extraContainers: |
-      - name: cloudsql-proxy
-        image: gcr.io/cloudsql-docker/gce-proxy:1.11
-        command:
-          - /cloud_sql_proxy
-        args:
-          - -instances={{ .Values.global.cloudsql.project }}:{{ .Values.global.cloudsql.region }}:{{ .Values.global.cloudsql.instance }}=tcp:5432
-          - -credential_file=/secrets/cloudsql/credentials.json
-        volumeMounts:
-          - name: cloudsql-creds
-            mountPath: /secrets/cloudsql
-            readOnly: true
-    {{- end }}
-
     extraVolumeMounts: |
       - name: theme
         mountPath: /opt/jboss/keycloak/standalone/deployments
@@ -44,11 +29,6 @@ official-keycloak:
       - name: realm-secret
         secret:
           secretName: realm-secret
-      {{- if .Values.global.cloudsql.enabled }}          
-      - name: cloudsql-creds
-        secret:
-          secretName: cloudsql-instance-credentials
-      {{- end }}
 
     # extraArgs: -Dkeycloak.import=/realm/realm.json
     extraArgs: -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/realm -Dkeycloak.migration.strategy=IGNORE_EXISTING
@@ -70,12 +50,7 @@ official-keycloak:
       # existingSecretKey: postgresql-password
 
       dbName: keycloak
-      {{- if .Values.global.cloudsql.enabled }}
-      dbHost: 127.0.0.1
-      {{- else }}
       dbHost: official-pg
-      {{- end }}
-      # dbHost: {{ .Values.environment.cloudsql | ternary "127.0.0.1" "official-pg" }}
       dbPort: 5432 # 5432 is PostgreSQL's default port. For MySQL it would be 3306
       dbUser: keycloak
 
@@ -90,12 +65,6 @@ official-keycloak:
 keycloak:
   persistence:
     deployPostgres: false
-
-global:
-  postgres:
-    enabled: true
-  cloudsql:
-    enabled: false
 
 official-postgresql:
   fullnameOverride: official-pg
