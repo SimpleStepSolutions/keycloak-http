@@ -19,16 +19,16 @@ official-keycloak:
     extraVolumeMounts: |
       - name: theme
         mountPath: /opt/jboss/keycloak/standalone/deployments
-      - name: realm-secret
+      - name: realm-secret-volume
         mountPath: "/realm/"
         readOnly: true
 
     extraVolumes: |
       - name: theme
         emptyDir: {}
-      - name: realm-secret
+      - name: realm-secret-volume
         secret:
-          secretName: realm-secret
+          secretName: realm-secret-working
 
     # extraArgs: -Dkeycloak.import=/realm/realm.json
     extraArgs: -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/realm -Dkeycloak.migration.strategy=IGNORE_EXISTING
