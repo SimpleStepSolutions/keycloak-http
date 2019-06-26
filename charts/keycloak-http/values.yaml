@@ -94,8 +94,6 @@ keycloak:
 global:
   postgres:
     enabled: true
-  cloudsql:
-    enabled: false
 
 official-postgresql:
   fullnameOverride: official-pg
