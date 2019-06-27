@@ -19,31 +19,19 @@ official-keycloak:
     extraVolumeMounts: |
       - name: theme
         mountPath: /opt/jboss/keycloak/standalone/deployments
-      - name: realm-secret-master-volume
-        mountPath: "/realm/master"
-        readOnly: true
-      - name: realm-secret-bbd-volume
-        mountPath: "/realm/bbd"
-        readOnly: true
-      - name: realm-secret-external-volume
-        mountPath: "/realm/external"
+      - name: realm-secret-volume
+        mountPath: "/realm/"
         readOnly: true
 
     extraVolumes: |
       - name: theme
         emptyDir: {}
-      - name: realm-secret-master-volume
+      - name: realm-secret-volume
         secret:
-          secretName: realm-secret-master
-      - name: realm-secret-bbd-volume
-        secret:
-          secretName: realm-secret-bbd
-      - name: realm-secret-external-volume
-        secret:
-          secretName: realm-secret-external
+          secretName: realm-secret-working
 
     # extraArgs: -Dkeycloak.import=/realm/realm.json
-    extraArgs: -Dkeycloak.migration.action=import -Dkeycloak.migration.dir=/realm/master -Dkeycloak.import=/realm/bbd/bbd-realm.json,/realm/external/external-realm.json -Dkeycloak.migration.strategy=IGNORE_EXISTING
+    extraArgs: -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/realm -Dkeycloak.migration.strategy=IGNORE_EXISTING
 
     password: "admin"
     persistence:
