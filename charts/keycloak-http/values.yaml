@@ -43,7 +43,7 @@ official-keycloak:
           secretName: realm-secret-external
 
     # extraArgs: -Dkeycloak.import=/realm/realm.json
-    extraArgs: -Dkeycloak.migration.action=import -Dkeycloak.import=/realm/master/master-realm.json,/realm/bbd/bbd-realm.json,/realm/external/external-realm.json -Dkeycloak.migration.strategy=IGNORE_EXISTING
+    extraArgs: -Dkeycloak.migration.action=import -Dkeycloak.migration.dir=/realm/master -Dkeycloak.import=/realm/bbd/bbd-realm.json,/realm/external/external-realm.json -Dkeycloak.migration.strategy=IGNORE_EXISTING
 
     password: "admin"
     persistence:
