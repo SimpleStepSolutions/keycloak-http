@@ -28,7 +28,7 @@ official-keycloak:
         emptyDir: {}
       - name: realm-secret-volume
         secret:
-          secretName: realm-secret-working
+          secretName: realm-secret
 
     # extraArgs: -Dkeycloak.import=/realm/realm.json
     extraArgs: -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/realm -Dkeycloak.migration.strategy=IGNORE_EXISTING
