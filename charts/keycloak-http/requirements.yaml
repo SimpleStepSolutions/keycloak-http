@@ -7,3 +7,4 @@ dependencies:
   alias: official-postgresql
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.15.0
+  condition: keycloak.cloudsql.enabled
