@@ -65,6 +65,8 @@ official-keycloak:
 keycloak:
   persistence:
     deployPostgres: false
+  cloudsql:
+    disabled: true
 
 official-postgresql:
   fullnameOverride: official-pg
