@@ -45,8 +45,10 @@ official-keycloak:
       ## The following values only apply if "deployPostgres" is set to "false"
 
       # Optionally specify an existing secret
-      existingSecret: official-pg
-      existingSecretKey: postgres-password
+      # existingSecret: official-pg
+      # existingSecretKey: postgres-password
+      existingSecret: postgresql-secret
+      existingSecretKey: postgresql-password
       # existingSecretKey: postgresql-password
 
       dbName: keycloak
@@ -74,8 +76,12 @@ official-postgresql:
   # postgresqlPassword: password
   # postgresqlDatabase: keycloak
   postgresUser: keycloak
-  postgresPassword: password
+  # postgresPassword: password
   postgresDatabase: keycloak
+  existingSecret: postgresql-secret
+
+postgresqlSecret:
+  postgresqlPassword: password
 
 realm-secret:
   bbd-realm:
