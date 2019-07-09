@@ -48,7 +48,7 @@ official-keycloak:
       # existingSecret: official-pg
       # existingSecretKey: postgres-password
       existingSecret: postgresql-secret
-      existingSecretKey: postgresql-password
+      existingSecretKey: postgres-password
       # existingSecretKey: postgresql-password
 
       dbName: keycloak
