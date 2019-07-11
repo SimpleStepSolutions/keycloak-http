@@ -45,10 +45,8 @@ official-keycloak:
       ## The following values only apply if "deployPostgres" is set to "false"
 
       # Optionally specify an existing secret
-      # existingSecret: official-pg
-      # existingSecretKey: postgres-password
       existingSecret: postgresql-secret
-      existingSecretKey: postgres-password
+      existingSecretKey: postgresql-password
       # existingSecretKey: postgresql-password
 
       dbName: keycloak
@@ -72,12 +70,8 @@ keycloak:
 
 official-postgresql:
   fullnameOverride: official-pg
-  # postgresqlUsername: keycloak
-  # postgresqlPassword: password
-  # postgresqlDatabase: keycloak
-  postgresUser: keycloak
-  # postgresPassword: password
-  postgresDatabase: keycloak
+  postgresqlUsername: keycloak
+  postgresqlDatabase: keycloak
   existingSecret: postgresql-secret
 
 postgresqlSecret:
